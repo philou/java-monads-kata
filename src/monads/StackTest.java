@@ -1,6 +1,7 @@
 package monads;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 public class StackTest {
@@ -8,33 +9,38 @@ public class StackTest {
 	private static final Object A = new Object();
 	private static final Object B = new Object();
 
-	private Stack stack = new Stack();
+	private Stack stack = Stack.empty();
 
 	@Test public void
 	starts_empty() {
-		assertTrue(stack.empty());
+		assertEquals(Stack.empty(), stack);
 	}
 	
 	@Test(expected = Exception.class) public void
 	forbids_pop_when_empty() {
-		stack.pop();
+		Stack.pop(stack);
 	}
 	
 	@Test public void
 	pushes_and_pops_an_objects() {		
-		stack.push(A);
+		stack = Stack.push(stack, A);
 		
-		assertEquals(A, stack.pop());
-		assertTrue(stack.empty());
+		Pair pair = Stack.pop(stack);
+		assertEquals(A, pair.value);
+		assertEquals(Stack.empty(), pair.stack);
 	}
 	
 	@Test public void
 	pops_objects_in_reverse_push_order() {
-		stack.push(A);
-		stack.push(B);
+		stack = Stack.push(stack, A);
+		stack = Stack.push(stack, B);
 		
-		assertEquals(B, stack.pop());
-		assertEquals(A, stack.pop());
-		assertTrue(stack.empty());
+		Pair pair = Stack.pop(stack);
+		assertEquals(B, pair.value);
+
+		pair = Stack.pop(pair.stack);
+		assertEquals(A, pair.value);
+
+		assertEquals(Stack.empty(), pair.stack);
 	}
 }

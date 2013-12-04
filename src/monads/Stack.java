@@ -1,24 +1,24 @@
 package monads;
 
-import java.util.ArrayList;
+public final class Stack {
 
-public class Stack {
+	private final Stack previous;
+	private final Object state;
 	
-	private ArrayList<Object> state = new ArrayList<Object>();
+	public static Stack empty() {
+		return null;
+	}
 	
-	public void push(Object a) {
-		state.add(a);
+	public Stack(Stack previous, Object state) {
+		this.previous = previous;
+		this.state = state;
+	}
+	
+	public static Stack push(Stack self, Object a) {
+		return new Stack(self, a);
 	}
 
-	public Object pop() {
-		int count = state.size();
-		Object result = state.get(count-1);
-		state.remove(count-1);
-		return result;
+	public static Pair pop(Stack self) {
+		return new Pair(self.previous, self.state);
 	}
-
-	public boolean empty() {
-		return state.isEmpty();
-	}
-
 }
