@@ -20,12 +20,41 @@ public class StackTest {
 	
 	@Test(expected = Exception.class) public void
 	forbids_pop_when_empty() {
-		Stack.pop(pair.stack);
+		do_(pop());
 	}
 	
+	
+	@Test public void
+	pushes_and_pops_an_objects() {	
+		do_(push(A));
+		do_(pop());
+
+		assertEquals(A, pair.value);
+		assertEquals(empty(), pair.stack);
+	}
+
+	@Test public void
+	pops_objects_in_reverse_push_order() {
+		do_(push(A));
+		do_(push(B));
+		
+		do_(pop());
+		assertEquals(B, pair.value);
+
+		do_(pop());
+		assertEquals(A, pair.value);
+
+		assertEquals(empty(), pair.stack);
+	}
+
 	private static interface StackFunction {
 		Pair eval(Stack stack);
 	}
+
+	private void do_(StackFunction operation) {
+		pair = operation.eval(pair.stack);
+	}
+
 	private static class StackPush implements StackFunction {
 		private Object value;
 
@@ -48,28 +77,5 @@ public class StackTest {
 	}
 	private StackPop pop() {
 		return new StackPop();
-	}
-	
-	@Test public void
-	pushes_and_pops_an_objects() {	
-		pair = push(A).eval(pair.stack);
-		pair = pop().eval(pair.stack);
-
-		assertEquals(A, pair.value);
-		assertEquals(empty(), pair.stack);
-	}
-
-	@Test public void
-	pops_objects_in_reverse_push_order() {
-		pair = push(A).eval(pair.stack);
-		pair = push(B).eval(pair.stack);
-		
-		pair = pop().eval(pair.stack);
-		assertEquals(B, pair.value);
-
-		pair = pop().eval(pair.stack);
-		assertEquals(A, pair.value);
-
-		assertEquals(empty(), pair.stack);
 	}
 }
