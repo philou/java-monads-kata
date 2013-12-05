@@ -23,9 +23,16 @@ public class StackTest {
 		pop(pair.stack);
 	}
 	
+	private static interface StackFunction {
+		Pair eval(Stack stack);
+	}
 	@Test public void
-	pushes_and_pops_an_objects() {		
-		pair = push(pair.stack, A);
+	pushes_and_pops_an_objects() {	
+		pair = new StackFunction() {
+			public Pair eval(Stack stack) {
+				return stack.push(stack, A);
+			}
+		}.eval(pair.stack);
 		
 		pair = pop(pair.stack);
 		assertEquals(A, pair.value);
