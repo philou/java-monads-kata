@@ -20,7 +20,7 @@ public class StackTest {
 	
 	@Test(expected = Exception.class) public void
 	forbids_pop_when_empty() {
-		pop(pair.stack);
+		Stack.pop(pair.stack);
 	}
 	
 	private static interface StackFunction {
@@ -34,33 +34,40 @@ public class StackTest {
 		}
 
 		public Pair eval(Stack stack) {
-			return push(stack, value);
+			return Stack.push(stack, value);
 		}
 	}
+	private StackPush push(Object value) {
+		return new StackPush(value);
+	}
+	
 	private static class StackPop implements StackFunction {
 		public Pair eval(Stack stack) {
-			return pop(stack);
+			return Stack.pop(stack);
 		}
+	}
+	private StackPop pop() {
+		return new StackPop();
 	}
 	
 	@Test public void
 	pushes_and_pops_an_objects() {	
-		pair = new StackPush(A).eval(pair.stack);
-		pair = new StackPop().eval(pair.stack);
+		pair = push(A).eval(pair.stack);
+		pair = pop().eval(pair.stack);
 
 		assertEquals(A, pair.value);
 		assertEquals(empty(), pair.stack);
 	}
-	
+
 	@Test public void
 	pops_objects_in_reverse_push_order() {
-		pair = push(pair.stack, A);
-		pair = push(pair.stack, B);
+		pair = push(A).eval(pair.stack);
+		pair = push(B).eval(pair.stack);
 		
-		pair = pop(pair.stack);
+		pair = pop().eval(pair.stack);
 		assertEquals(B, pair.value);
 
-		pair = pop(pair.stack);
+		pair = pop().eval(pair.stack);
 		assertEquals(A, pair.value);
 
 		assertEquals(empty(), pair.stack);
