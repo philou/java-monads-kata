@@ -10,33 +10,33 @@ public class StackTest {
 	private static final Object A = new Object();
 	private static final Object B = new Object();
 
-	private Stack stack = empty();
+	private Pair pair = new Pair(empty(),null);
 
 	@Test public void
 	starts_empty() {
-		assertEquals(empty(), stack);
+		assertEquals(empty(), pair.stack);
 	}
 	
 	@Test(expected = Exception.class) public void
 	forbids_pop_when_empty() {
-		pop(stack);
+		pop(pair.stack);
 	}
 	
 	@Test public void
 	pushes_and_pops_an_objects() {		
-		stack = push(stack, A);
+		pair = new Pair(push(pair.stack, A),null);
 		
-		Pair pair = pop(stack);
+		pair = pop(pair.stack);
 		assertEquals(A, pair.value);
 		assertEquals(empty(), pair.stack);
 	}
 	
 	@Test public void
 	pops_objects_in_reverse_push_order() {
-		stack = push(stack, A);
-		stack = push(stack, B);
+		pair = new Pair(push(pair.stack, A),null);
+		pair = new Pair(push(pair.stack, B),null);
 		
-		Pair pair = pop(stack);
+		pair = pop(pair.stack);
 		assertEquals(B, pair.value);
 
 		pair = pop(pair.stack);
