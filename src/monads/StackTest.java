@@ -2,6 +2,7 @@ package monads;
 
 import static org.junit.Assert.assertEquals;
 import static monads.Stack.*;
+import static monads.Pair.*;
 
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ public class StackTest {
 	private static final Object A = new Object();
 	private static final Object B = new Object();
 
-	private Pair pair = new Pair(empty(),null);
+	private Pair pair = pair(empty());
 
 	@Test public void
 	starts_empty() {

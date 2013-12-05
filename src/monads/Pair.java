@@ -5,6 +5,13 @@ public final class Pair {
 	public final Stack stack;
 	public final Object value;
 
+	public static Pair pair(Stack stack) {
+		return pair(stack, null);
+	}
+	public static Pair pair(Stack stack, Object value) {
+		return new Pair(stack, value);
+	}
+	
 	public Pair(Stack stack, Object value) {
 		this.stack = stack;
 		this.value = value;

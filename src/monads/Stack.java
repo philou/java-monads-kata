@@ -1,5 +1,7 @@
 package monads;
 
+import static monads.Pair.*;
+
 public final class Stack {
 
 	private final Stack previous;
@@ -15,10 +17,10 @@ public final class Stack {
 	}
 	
 	public static Pair push(Stack self, Object a) {
-		return new Pair(new Stack(self, a), null);
+		return pair(new Stack(self, a));
 	}
 
 	public static Pair pop(Stack self) {
-		return new Pair(self.previous, self.state);
+		return pair(self.previous, self.state);
 	}
 }
