@@ -26,15 +26,28 @@ public class StackTest {
 	private static interface StackFunction {
 		Pair eval(Stack stack);
 	}
+	private static class StackPush implements StackFunction {
+		private Object value;
+
+		public StackPush(Object value) {
+			this.value = value;
+		}
+
+		public Pair eval(Stack stack) {
+			return push(stack, value);
+		}
+	}
+	private static class StackPop implements StackFunction {
+		public Pair eval(Stack stack) {
+			return pop(stack);
+		}
+	}
+	
 	@Test public void
 	pushes_and_pops_an_objects() {	
-		pair = new StackFunction() {
-			public Pair eval(Stack stack) {
-				return stack.push(stack, A);
-			}
-		}.eval(pair.stack);
-		
-		pair = pop(pair.stack);
+		pair = new StackPush(A).eval(pair.stack);
+		pair = new StackPop().eval(pair.stack);
+
 		assertEquals(A, pair.value);
 		assertEquals(empty(), pair.stack);
 	}
