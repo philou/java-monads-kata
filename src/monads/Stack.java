@@ -9,7 +9,7 @@ public final class Stack {
 		return null;
 	}
 	
-	public Stack(Stack previous, Object state) {
+	private Stack(Stack previous, Object state) {
 		this.previous = previous;
 		this.state = state;
 	}
