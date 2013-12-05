@@ -14,8 +14,8 @@ public final class Stack {
 		this.state = state;
 	}
 	
-	public static Stack push(Stack self, Object a) {
-		return new Stack(self, a);
+	public static Pair push(Stack self, Object a) {
+		return new Pair(new Stack(self, a), null);
 	}
 
 	public static Pair pop(Stack self) {

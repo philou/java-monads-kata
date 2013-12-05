@@ -24,7 +24,7 @@ public class StackTest {
 	
 	@Test public void
 	pushes_and_pops_an_objects() {		
-		pair = new Pair(push(pair.stack, A),null);
+		pair = push(pair.stack, A);
 		
 		pair = pop(pair.stack);
 		assertEquals(A, pair.value);
@@ -33,8 +33,8 @@ public class StackTest {
 	
 	@Test public void
 	pops_objects_in_reverse_push_order() {
-		pair = new Pair(push(pair.stack, A),null);
-		pair = new Pair(push(pair.stack, B),null);
+		pair = push(pair.stack, A);
+		pair = push(pair.stack, B);
 		
 		pair = pop(pair.stack);
 		assertEquals(B, pair.value);
