@@ -16,13 +16,13 @@ public final class Stack {
 		}
 	
 		public StackAndValue<Void> eval(Stack stack) {
-			return push(stack, value);
+			return mFail(new Stack(stack, value));
 		}
 	}
 
 	static class Pop implements Function<Object> {
 		public StackAndValue<Object> eval(Stack stack) {
-			return pop(stack);
+			return mReturn(stack.previous, stack.state);
 		}
 	}
 
@@ -37,12 +37,12 @@ public final class Stack {
 		this.previous = previous;
 		this.state = state;
 	}
-	
-	public static StackAndValue<Void> push(Stack self, Object a) {
-		return mFail(new Stack(self, a));
+
+	static Push push(Object value) {
+		return new Push(value);
 	}
 
-	public static StackAndValue<Object> pop(Stack self) {
-		return mReturn(self.previous, self.state);
+	static Pop pop() {
+		return new Pop();
 	}
 }

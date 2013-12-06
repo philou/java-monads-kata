@@ -23,7 +23,6 @@ public class StackTest {
 		monad = monad.bind(pop());
 	}
 	
-	
 	@Test public void
 	pushes_and_pops_an_objects() {	
 		monad = monad.
@@ -48,12 +47,5 @@ public class StackTest {
 		assertEquals(A, monad.value);
 
 		assertEquals(empty(), monad.stack);
-	}
-
-	private Stack.Push push(Object value) {
-		return new Stack.Push(value);
-	}
-	private Stack.Pop pop() {
-		return new Stack.Pop();
 	}
 }
