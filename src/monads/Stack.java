@@ -1,27 +1,27 @@
 package monads;
 
-import static monads.Pair.*;
+import static monads.StackAndValue.*;
 
 public final class Stack {
 
-	static interface Function {
-		Pair eval(Stack stack);
+	static interface Function<T> {
+		StackAndValue<T> eval(Stack stack);
 	}
 
-	static class Push implements Function {
+	static class Push implements Function<Void> {
 		private Object value;
 	
 		public Push(Object value) {
 			this.value = value;
 		}
 	
-		public Pair eval(Stack stack) {
+		public StackAndValue<Void> eval(Stack stack) {
 			return push(stack, value);
 		}
 	}
 
-	static class Pop implements Function {
-		public Pair eval(Stack stack) {
+	static class Pop implements Function<Object> {
+		public StackAndValue<Object> eval(Stack stack) {
 			return pop(stack);
 		}
 	}
@@ -38,11 +38,11 @@ public final class Stack {
 		this.state = state;
 	}
 	
-	public static Pair push(Stack self, Object a) {
-		return pair(new Stack(self, a));
+	public static StackAndValue<Void> push(Stack self, Object a) {
+		return mFail(new Stack(self, a));
 	}
 
-	public static Pair pop(Stack self) {
-		return pair(self.previous, self.state);
+	public static StackAndValue<Object> pop(Stack self) {
+		return mReturn(self.previous, self.state);
 	}
 }

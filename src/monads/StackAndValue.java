@@ -1,22 +1,26 @@
 package monads;
 
-import monads.Stack.Function;
 
-public final class Pair {
+public final class StackAndValue<T> implements Monad<T> {
 	
 	public final Stack stack;
-	public final Object value;
+	public final T value;
 
-	public static Pair pair(Stack stack) {
-		return pair(stack, null);
+	public static StackAndValue<Void> mFail(Stack stack) {
+		return mReturn(stack, null);
 	}
-	public static Pair pair(Stack stack, Object value) {
-		return new Pair(stack, value);
+	public static <U> StackAndValue<U> mReturn(Stack stack, U value) {
+		return new StackAndValue<U>(stack, value);
 	}
 		
-	public Pair(Stack stack, Object value) {
+	public StackAndValue(Stack stack, T value) {
 		this.stack = stack;
 		this.value = value;
+	}
+
+	@Override
+	public <U> StackAndValue<U> bind(Stack.Function<U> operation) {
+		return operation.eval(this.stack);
 	}
 
 	@Override
@@ -36,7 +40,7 @@ public final class Pair {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pair other = (Pair) obj;
+		StackAndValue<?> other = (StackAndValue<?>) obj;
 		if (stack == null) {
 			if (other.stack != null)
 				return false;
@@ -48,8 +52,5 @@ public final class Pair {
 		} else if (!value.equals(other.value))
 			return false;
 		return true;
-	}
-	public Pair bind(Stack.Function operation) {
-		return operation.eval(this.stack);
 	}
 }
