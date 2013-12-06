@@ -1,5 +1,7 @@
 package monads;
 
+import monads.Stack.Function;
+
 public final class Pair {
 	
 	public final Stack stack;
@@ -11,7 +13,7 @@ public final class Pair {
 	public static Pair pair(Stack stack, Object value) {
 		return new Pair(stack, value);
 	}
-	
+		
 	public Pair(Stack stack, Object value) {
 		this.stack = stack;
 		this.value = value;
@@ -46,5 +48,8 @@ public final class Pair {
 		} else if (!value.equals(other.value))
 			return false;
 		return true;
+	}
+	public Pair bind(Stack.Function operation) {
+		return operation.eval(this.stack);
 	}
 }
